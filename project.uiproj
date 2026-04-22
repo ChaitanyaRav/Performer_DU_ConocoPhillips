@@ -1,0 +1,6 @@
+{
+  "Name": "ConocoPhillips-Performer",
+  "ProjectType": "Process",
+  "Description": "DU ",
+  "MainFile": "Main-ActionCenter.xaml"
+}
