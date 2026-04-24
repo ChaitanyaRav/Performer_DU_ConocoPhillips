@@ -4,9 +4,9 @@
     {
       "Connections": [],
       "DocumentTypeId": "Semi-StructuredDocument.Invoice.PlantSettlementStatements",
-      "Group": "Semi-Structured Document",
-      "Category": "",
-      "Name": "Plant Settlement Statements",
+      "Group": "ConocoPhillips",
+      "Category": "Statements",
+      "Name": "Plant Statements",
       "OptionalUniqueIdentifier": "",
       "TypeField": {
         "FieldId": "Semi-StructuredDocument.Invoice.PlantSettlementStatements.DocumentType",
@@ -304,8 +304,10 @@
   ],
   "Groups": [
     {
-      "Name": "Semi-Structured Document",
-      "Categories": []
+      "Name": "ConocoPhillips",
+      "Categories": [
+        "Statements"
+      ]
     }
   ],
   "SupportedLanguages": [
