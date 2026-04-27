@@ -112,7 +112,7 @@
       <AssemblyReference>UiPath.Vision.Core</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Pre-extraction processing and Data Extraction workflow. Extractors are process-dependant!&#xA;&#xA;Outputs whether Human validation is required.asdasd" DisplayName="Extract" sap:VirtualizedContainerService.HintSize="778,1170" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Pre-extraction processing and Data Extraction workflow. Extractors are process-dependant!&#xA;&#xA;Outputs whether Human validation is required.asdasd" DisplayName="Extract" sap:VirtualizedContainerService.HintSize="745,1170" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
