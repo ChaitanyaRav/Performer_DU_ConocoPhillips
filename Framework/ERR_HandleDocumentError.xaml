@@ -48,6 +48,7 @@
       <x:String>UiPath.Excel</x:String>
       <x:String>UiPath.Platform.ResourceHandling</x:String>
       <x:String>UiPath.Excel.Activities</x:String>
+      <x:String>System.Linq.Expressions</x:String>
     </sco:Collection>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
@@ -94,9 +95,21 @@
       <AssemblyReference>UiPath.Excel.Activities</AssemblyReference>
       <AssemblyReference>UiPath.Excel.Activities.Design</AssemblyReference>
       <AssemblyReference>UiPath.Platform</AssemblyReference>
+      <AssemblyReference>System.Memory.Data</AssemblyReference>
+      <AssemblyReference>System.Console</AssemblyReference>
+      <AssemblyReference>System.Security.Permissions</AssemblyReference>
+      <AssemblyReference>System.Configuration.ConfigurationManager</AssemblyReference>
+      <AssemblyReference>System.Private.Uri</AssemblyReference>
+      <AssemblyReference>System.Private.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.Private.DataContractSerialization</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization.Formatters</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization.Primitives</AssemblyReference>
+      <AssemblyReference>System.Linq.Expressions</AssemblyReference>
+      <AssemblyReference>System.Data.SqlClient</AssemblyReference>
+      <AssemblyReference>System.Data.Common</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Workflow executes when an exception occurs when processing a classified document.&#xA;&#xA;Any error cleanup should be done here.&#xA;&#xA;NOTE: By default, all exceptions are treated the same. " DisplayName="ERR_HandleDocumentError" sap:VirtualizedContainerService.HintSize="763,635" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Workflow executes when an exception occurs when processing a classified document.&#xA;&#xA;Any error cleanup should be done here.&#xA;&#xA;NOTE: By default, all exceptions are treated the same. " DisplayName="ERR_HandleDocumentError" sap:VirtualizedContainerService.HintSize="787,1098" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -104,7 +117,10 @@
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
     <ui:LogMessage DisplayName="Log Message - HandleDocumentError" sap:VirtualizedContainerService.HintSize="450,175" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Warn" Message="[String.Format(in_Config(&quot;WarnMessage_DocumentProcessingFailure&quot;), in_PageRange, in_TargetFile, in_Exception.GetType.Name, in_Exception.Message + Environment.NewLine, in_Exception.ToString + Environment.NewLine + in_Config(&quot;logKey&quot;))]" />
+    <ui:LogMessage DisplayName="Log-Report file creation" sap:VirtualizedContainerService.HintSize="450,175" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;Updating report &quot;]" />
     <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{ in_TransactionItem.Reference.ToString, in_TransactionItem.SpecificContent(&quot;Path&quot;).ToString, in_PageRange, in_Status, in_Reason}]" DataTable="[in_Report]" DisplayName="Add Data Row" sap:VirtualizedContainerService.HintSize="450,221" sap2010:WorkflowViewState.IdRef="AddDataRow_1" />
-    <ui:AppendRange WorkbookPathResource="{x:Null}" DataTable="[in_Report]" DisplayName="Append Report File" sap:VirtualizedContainerService.HintSize="450,139" sap2010:WorkflowViewState.IdRef="AppendRange_1" SheetName="[in_Config(&quot;ReportSheet&quot;).ToString]" WorkbookPath="[Path.GetFullPath(in_Config(&quot;ReportPath&quot;).ToString)]" />
+    <ui:AppendRange WorkbookPathResource="{x:Null}" DataTable="[in_Report]" DisplayName="Append Report File" sap:VirtualizedContainerService.HintSize="450,148" sap2010:WorkflowViewState.IdRef="AppendRange_1" SheetName="[in_Config(&quot;ReportSheet&quot;).ToString]" WorkbookPath="[Path.GetFullPath(in_Config(&quot;ReportPath&quot;).ToString)]" />
+    <ui:ClearDataTable DataTable="[in_Report]" DisplayName="Clear DataTable of previous values" sap:VirtualizedContainerService.HintSize="450,113" sap2010:WorkflowViewState.IdRef="ClearDataTable_1" />
+    <ui:LogMessage DisplayName="Log-End of doc error" sap:VirtualizedContainerService.HintSize="450,166" sap2010:WorkflowViewState.IdRef="LogMessage_3" Message="[&quot;End of Handle document error, Report updated&quot;]" />
   </Sequence>
 </Activity>

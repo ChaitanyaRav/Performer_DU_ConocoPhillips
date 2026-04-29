@@ -108,15 +108,15 @@
       <AssemblyReference>System.Private.Xml</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Flowchart sap2010:Annotation.AnnotationText="Set and log the transaction's status. The approach is similar to the one used by the RE-Framework.&#xA;&#xA;Business Rule Exception characterizes an irregular situation according to the process's rules and prevents the transaction to be processed. The transaction is not retried in this case, since the result will be the same until the problem that causes the exception is solved.&#xA;For example, it can be considered a BusinessRuleException if a process expects to read an email's attachment, but the sender didn't attach any file. In this case, immediate retries of the transaction will not yield a different result.&#xA;&#xA;On the other hand, system exceptions are characterized by exceptions whose types are different than BusinessRuleException. When this kind of exception happens, the transaction item can be retried after closing and reopening the applications involved in the process. The rationale behind this is that the exception was caused by a problem in the applications, which might be solved by restarting them." DisplayName="Set Transaction Status" sap:VirtualizedContainerService.HintSize="710.9999999999999,250.00000000000003" sap2010:WorkflowViewState.IdRef="Flowchart_1">
+  <Flowchart sap2010:Annotation.AnnotationText="Set and log the transaction's status. The approach is similar to the one used by the RE-Framework.&#xA;&#xA;Business Rule Exception characterizes an irregular situation according to the process's rules and prevents the transaction to be processed. The transaction is not retried in this case, since the result will be the same until the problem that causes the exception is solved.&#xA;For example, it can be considered a BusinessRuleException if a process expects to read an email's attachment, but the sender didn't attach any file. In this case, immediate retries of the transaction will not yield a different result.&#xA;&#xA;On the other hand, system exceptions are characterized by exceptions whose types are different than BusinessRuleException. When this kind of exception happens, the transaction item can be retried after closing and reopening the applications involved in the process. The rationale behind this is that the exception was caused by a problem in the applications, which might be solved by restarting them." DisplayName="Set Transaction Status" sap:VirtualizedContainerService.HintSize="793,336" sap2010:WorkflowViewState.IdRef="Flowchart_1">
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
         <x:Boolean x:Key="IsPinned">False</x:Boolean>
-        <av:Point x:Key="ShapeLocation">200,2.5</av:Point>
+        <av:Point x:Key="ShapeLocation">315,5</av:Point>
         <av:Size x:Key="ShapeSize">50,50</av:Size>
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
-        <av:PointCollection x:Key="ConnectorLocation">224.8,52.1 224.8,97.7</av:PointCollection>
+        <av:PointCollection x:Key="ConnectorLocation">340,55 340,85 250,85 250,90</av:PointCollection>
         <x:Double x:Key="Width">620</x:Double>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
@@ -127,10 +127,10 @@
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-          <av:Point x:Key="ShapeLocation">194.8,97.7</av:Point>
+          <av:Point x:Key="ShapeLocation">220,90</av:Point>
           <av:Size x:Key="ShapeSize">60,60</av:Size>
-          <av:PointCollection x:Key="TrueConnector">194.8,127.7 55.2,127.7 55.2,355.6</av:PointCollection>
-          <av:PointCollection x:Key="FalseConnector">254.8,127.7 370,127.7 370,196.4</av:PointCollection>
+          <av:PointCollection x:Key="TrueConnector">220,120 55,120 55,355.6</av:PointCollection>
+          <av:PointCollection x:Key="FalseConnector">280,120 370,120 370,196.4</av:PointCollection>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
       <FlowDecision.True>
@@ -141,15 +141,15 @@
               <av:Size x:Key="ShapeSize">110,70</av:Size>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
-          <Sequence sap2010:Annotation.AnnotationText="If the transaction item is processed without any exception, its status is updated as Successful." DisplayName="Success" sap:VirtualizedContainerService.HintSize="686.9999999999999,1086" sap2010:WorkflowViewState.IdRef="Sequence_2">
+          <Sequence sap2010:Annotation.AnnotationText="If the transaction item is processed without any exception, its status is updated as Successful." DisplayName="Success" sap:VirtualizedContainerService.HintSize="528,1086" sap2010:WorkflowViewState.IdRef="Sequence_2">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                 <x:Boolean x:Key="IsAnnotationDocked">False</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <ui:LogMessage DisplayName="Log Message - Set Status Success" sap:VirtualizedContainerService.HintSize="653,175" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[in_Config(&quot;LogMessage_SetTransactionStatusSuccess&quot;) + Environment.NewLine + in_Config(&quot;logKey&quot;)]" />
-            <ui:RetryScope sap2010:Annotation.AnnotationText="Although unusual, the connection to the Orchestrator might time-out. The retry mechanism is used to compensate for minor fluctuatios in network stability and other recoverable issues." ContinueOnError="False" DisplayName="Retry Scope - Set Status Success" sap:VirtualizedContainerService.HintSize="653,683" sap2010:WorkflowViewState.IdRef="RetryScope_1" NumberOfRetries="[in_MaxAttempts]" RetryInterval="[in_RetryInterval]">
+            <ui:LogMessage DisplayName="Log Message - Set Status Success" sap:VirtualizedContainerService.HintSize="494,175" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[in_Config(&quot;LogMessage_SetTransactionStatusSuccess&quot;) + Environment.NewLine + in_Config(&quot;logKey&quot;)]" />
+            <ui:RetryScope sap2010:Annotation.AnnotationText="Although unusual, the connection to the Orchestrator might time-out. The retry mechanism is used to compensate for minor fluctuatios in network stability and other recoverable issues." ContinueOnError="False" DisplayName="Retry Scope - Set Status Success" sap:VirtualizedContainerService.HintSize="494,683" sap2010:WorkflowViewState.IdRef="RetryScope_1" NumberOfRetries="[in_MaxAttempts]" RetryInterval="[in_RetryInterval]">
               <ui:RetryScope.ActivityBody>
                 <ActivityAction>
                   <If Condition="[not in_TransactionItem is Nothing]" DisplayName="If Valid Transaction Item, Mark Success" sap:VirtualizedContainerService.HintSize="452,413" sap2010:WorkflowViewState.IdRef="If_1">
@@ -172,6 +172,15 @@
                         </ui:SetTransactionStatus.TimeoutMS>
                       </ui:SetTransactionStatus>
                     </If.Then>
+                    <If.Else>
+                      <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="450,90" sap2010:WorkflowViewState.IdRef="Sequence_8">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                      </Sequence>
+                    </If.Else>
                   </If>
                 </ActivityAction>
               </ui:RetryScope.ActivityBody>
@@ -184,13 +193,13 @@
                 </scg:Dictionary>
               </sap:WorkflowViewStateService.ViewState>
             </ui:RetryScope>
-            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="DU-StatusReport - Invoke Workflow File (Framework\ReusableWorkflows\DU-StatusReport.xaml)" sap:VirtualizedContainerService.HintSize="653,168" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Framework\ReusableWorkflows\DU-StatusReport.xaml">
+            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="DU-StatusReport - Invoke Workflow File (Framework\ReusableWorkflows\DU-StatusReport.xaml)" sap:VirtualizedContainerService.HintSize="494,168" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Framework\ReusableWorkflows\DU-StatusReport.xaml">
               <ui:InvokeWorkflowFile.Arguments>
                 <InArgument x:TypeArguments="sd:DataTable" x:Key="in_Report">[in_Report]</InArgument>
                 <InArgument x:TypeArguments="ui:QueueItem" x:Key="in_TransactionItem">[in_TransactionItem]</InArgument>
                 <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">[in_Config]</InArgument>
                 <InArgument x:TypeArguments="x:String" x:Key="in_Status">Success</InArgument>
-                <InArgument x:TypeArguments="x:String" x:Key="in_Reason">-</InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_Reason" />
                 <InArgument x:TypeArguments="x:String" x:Key="in_Pageno" />
               </ui:InvokeWorkflowFile.Arguments>
             </ui:InvokeWorkflowFile>
@@ -217,15 +226,15 @@
                   <av:Size x:Key="ShapeSize">110,70</av:Size>
                 </scg:Dictionary>
               </sap:WorkflowViewStateService.ViewState>
-              <Sequence sap2010:Annotation.AnnotationText="If a BussinessRuleException or a DocumentRejectedByUserException is thrown during the process, the transaction item's status is updated as Failed (Exception Type: Business).&#xA;" DisplayName="Business Exception" sap:VirtualizedContainerService.HintSize="450,537" sap2010:WorkflowViewState.IdRef="Sequence_3">
+              <Sequence sap2010:Annotation.AnnotationText="If a BussinessRuleException or a DocumentRejectedByUserException is thrown during the process, the transaction item's status is updated as Failed (Exception Type: Business).&#xA;" DisplayName="Business Exception" sap:VirtualizedContainerService.HintSize="528,1041" sap2010:WorkflowViewState.IdRef="Sequence_3">
                 <sap:WorkflowViewStateService.ViewState>
                   <scg:Dictionary x:TypeArguments="x:String, x:Object">
                     <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                     <x:Boolean x:Key="IsAnnotationDocked">False</x:Boolean>
                   </scg:Dictionary>
                 </sap:WorkflowViewStateService.ViewState>
-                <ui:LogMessage DisplayName="Log Message - Set Status Business Rule Exception" sap:VirtualizedContainerService.HintSize="416,175" sap2010:WorkflowViewState.IdRef="LogMessage_4" Message="[in_Config(&quot;LogMessage_SetTransactionStatusBRE&quot;) + &quot; &quot; + in_Exception.ToString + Environment.NewLine + in_Config(&quot;logKey&quot;)]" />
-                <ui:RetryScope sap2010:Annotation.AnnotationText="Although unusual, the connection to the Orchestrator might time-out. The retry mechanism is used to compensate for minor fluctuatios in network stability and other recoverable issues." ContinueOnError="False" DisplayName="Retry Scope - Set Status Business Rule Exception" sap:VirtualizedContainerService.HintSize="416,134" sap2010:WorkflowViewState.IdRef="RetryScope_2" NumberOfRetries="[in_MaxAttempts]" RetryInterval="[in_RetryInterval]">
+                <ui:LogMessage DisplayName="Log Message - Set Status Business Rule Exception" sap:VirtualizedContainerService.HintSize="494,175" sap2010:WorkflowViewState.IdRef="LogMessage_4" Message="[in_Config(&quot;LogMessage_SetTransactionStatusBRE&quot;) + &quot; &quot; + in_Exception.ToString + Environment.NewLine + in_Config(&quot;logKey&quot;)]" />
+                <ui:RetryScope sap2010:Annotation.AnnotationText="Although unusual, the connection to the Orchestrator might time-out. The retry mechanism is used to compensate for minor fluctuatios in network stability and other recoverable issues." ContinueOnError="False" DisplayName="Retry Scope - Set Status Business Rule Exception" sap:VirtualizedContainerService.HintSize="494,806" sap2010:WorkflowViewState.IdRef="RetryScope_2" NumberOfRetries="[in_MaxAttempts]" RetryInterval="[in_RetryInterval]">
                   <ui:RetryScope.ActivityBody>
                     <ActivityAction>
                       <If Condition="[not in_TransactionItem is Nothing]" DisplayName="If Valid Transaction Item, Mark BRE" sap:VirtualizedContainerService.HintSize="452,465" sap2010:WorkflowViewState.IdRef="If_2">
@@ -245,6 +254,15 @@
                             </ui:SetTransactionStatus.TimeoutMS>
                           </ui:SetTransactionStatus>
                         </If.Then>
+                        <If.Else>
+                          <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="450,90" sap2010:WorkflowViewState.IdRef="Sequence_7">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                          </Sequence>
+                        </If.Else>
                       </If>
                     </ActivityAction>
                   </ui:RetryScope.ActivityBody>
@@ -254,21 +272,11 @@
                   <sap:WorkflowViewStateService.ViewState>
                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                       <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
-                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                       <x:Boolean x:Key="IsPinned">False</x:Boolean>
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
                 </ui:RetryScope>
-                <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="DU-StatusReport - Invoke Workflow File (Framework\ReusableWorkflows\DU-StatusReport.xaml)" sap:VirtualizedContainerService.HintSize="416,168" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Framework\ReusableWorkflows\DU-StatusReport.xaml">
-                  <ui:InvokeWorkflowFile.Arguments>
-                    <InArgument x:TypeArguments="sd:DataTable" x:Key="in_Report">[in_Report]</InArgument>
-                    <InArgument x:TypeArguments="ui:QueueItem" x:Key="in_TransactionItem">[in_TransactionItem]</InArgument>
-                    <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">[in_Config]</InArgument>
-                    <InArgument x:TypeArguments="x:String" x:Key="in_Status">BE</InArgument>
-                    <InArgument x:TypeArguments="x:String" x:Key="in_Reason" />
-                    <InArgument x:TypeArguments="x:String" x:Key="in_Pageno" />
-                  </ui:InvokeWorkflowFile.Arguments>
-                </ui:InvokeWorkflowFile>
               </Sequence>
             </FlowStep>
           </FlowDecision.True>
@@ -327,6 +335,7 @@
                 </ui:RetryScope>
                 <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="DU-StatusReport - Invoke Workflow File (Framework\ReusableWorkflows\DU-StatusReport.xaml)" sap:VirtualizedContainerService.HintSize="416,168" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="Framework\ReusableWorkflows\DU-StatusReport.xaml">
                   <ui:InvokeWorkflowFile.Arguments>
+                    <InArgument x:TypeArguments="x:String" x:Key="in_ExtractionResult" />
                     <InArgument x:TypeArguments="sd:DataTable" x:Key="in_Report">[in_Report]</InArgument>
                     <InArgument x:TypeArguments="ui:QueueItem" x:Key="in_TransactionItem">[in_TransactionItem]</InArgument>
                     <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">[in_Config]</InArgument>
