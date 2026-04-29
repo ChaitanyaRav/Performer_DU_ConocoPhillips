@@ -28,6 +28,18 @@
       "IsPrincipal": true,
       "ArgumentType": 0,
       "DataSourceItems": null
+    },
+    {
+      "Name": "out_validationAction",
+      "DisplayName": "out_validationAction",
+      "Category": null,
+      "Tooltip": "Orchestrator Validation Action that needs to be human-handled in order to continue the process.",
+      "Placeholder": null,
+      "Widget": null,
+      "IsRequired": false,
+      "IsPrincipal": true,
+      "ArgumentType": 0,
+      "DataSourceItems": null
     }
   ]
 }

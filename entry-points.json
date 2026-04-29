@@ -20,6 +20,112 @@
           }
         },
         "required": []
+      },
+      "output": {
+        "type": "object",
+        "properties": {
+          "out_validationAction": {
+            "type": "object",
+            "properties": {
+              "Id": {
+                "$ref": "#/$defs/nullableOfInt64"
+              },
+              "Status": {
+                "enum": [
+                  "Unassigned",
+                  "Pending",
+                  "Completed"
+                ]
+              },
+              "Title": {
+                "type": "string"
+              },
+              "Priority": {
+                "enum": [
+                  "Low",
+                  "Medium",
+                  "High",
+                  "Critical"
+                ]
+              },
+              "TaskCatalogName": {
+                "type": "string"
+              },
+              "TaskUrl": {
+                "type": "string"
+              },
+              "FolderPath": {
+                "type": "string"
+              },
+              "FolderId": {
+                "$ref": "#/$defs/nullableOfInt64"
+              },
+              "Data": {
+                "type": "object"
+              },
+              "Action": {
+                "type": "string"
+              },
+              "IsDeleted": {
+                "type": "boolean"
+              },
+              "AssignedToUser": {
+                "$ref": "#/$defs/userData"
+              },
+              "CreatorUser": {
+                "$ref": "#/$defs/userData"
+              },
+              "DeleterUser": {
+                "$ref": "#/$defs/userData"
+              },
+              "LastModifierUser": {
+                "$ref": "#/$defs/userData"
+              },
+              "CompletedByUser": {
+                "$ref": "#/$defs/userData"
+              },
+              "CreationTime": {
+                "$ref": "#/$defs/nullableOfDateTime"
+              },
+              "LastAssignedTime": {
+                "$ref": "#/$defs/nullableOfDateTime"
+              },
+              "CompletionTime": {
+                "$ref": "#/$defs/nullableOfDateTime"
+              },
+              "Type": {
+                "enum": [
+                  "Validation",
+                  "Classification"
+                ],
+                "readOnly": true
+              }
+            },
+            "$defs": {
+              "nullableOfInt64": {
+                "type": "integer",
+                "minimum": -9223372036854775808,
+                "maximum": 9223372036854775807
+              },
+              "userData": {
+                "type": "object",
+                "properties": {
+                  "Id": {
+                    "$ref": "#/$defs/nullableOfInt64"
+                  },
+                  "EmailAddress": {
+                    "type": "string"
+                  }
+                }
+              },
+              "nullableOfDateTime": {
+                "type": "string",
+                "format": "date-time"
+              }
+            },
+            "description": "Orchestrator Validation Action that needs to be human-handled in order to continue the process."
+          }
+        }
       }
     },
     {
