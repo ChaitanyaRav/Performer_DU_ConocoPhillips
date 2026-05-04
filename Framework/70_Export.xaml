@@ -1,7 +1,6 @@
 <Activity mc:Ignorable="sap sap2010" x:Class="_70_Export" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:p="http://schemas.uipath.com/workflow/activities/document-processing-contracts/results" xmlns:p1="http://schemas.uipath.com/workflow/activities/intelligentocr/extraction" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
     <x:Property Name="in_TransactionItem" Type="InArgument(ui:QueueItem)" />
-    <x:Property Name="in_OutputHdt" Type="InArgument(sd:DataTable)" />
     <x:Property sap2010:Annotation.AnnotationText="The results of the data extraction process." Name="in_ExtractionResults" Type="InArgument(p:ExtractionResult)" />
     <x:Property sap2010:Annotation.AnnotationText="Dictionary structure to store configuration data of the process (settings, constants and assets)." Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:String))" />
     <x:Property sap2010:Annotation.AnnotationText="Used to control the number of attempts of retrying in case of a system exception." Name="in_MaxAttempts" Type="InArgument(x:Int32)" />
@@ -57,7 +56,7 @@
     </scg:List>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
-    <scg:List x:TypeArguments="AssemblyReference" Capacity="64">
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="128">
       <AssemblyReference>Microsoft.Bcl.AsyncInterfaces</AssemblyReference>
       <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
       <AssemblyReference>mscorlib</AssemblyReference>
@@ -121,16 +120,16 @@
       <AssemblyReference>UiPath.Testing.Activities</AssemblyReference>
       <AssemblyReference>UiPath.OCR.Activities</AssemblyReference>
       <AssemblyReference>System.Runtime.Numerics</AssemblyReference>
+      <AssemblyReference>System.Memory.Data</AssemblyReference>
+      <AssemblyReference>System.Linq.Async</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Post-extraction &amp; Data Export&#xA;&#xA;Post extraction - any logic that must be executed after data extraction and prior to the data export belongs here (eg: format the data according to an export schema)&#xA;&#xA;Data Export - output the data to make it usable by the Business users or by subsequent processes. We recommend using UiPath's DataService." DisplayName="Export" sap:VirtualizedContainerService.HintSize="757,1958" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Post-extraction &amp; Data Export&#xA;&#xA;Post extraction - any logic that must be executed after data extraction and prior to the data export belongs here (eg: format the data according to an export schema)&#xA;&#xA;Data Export - output the data to make it usable by the Business users or by subsequent processes. We recommend using UiPath's DataService." DisplayName="Export" sap:VirtualizedContainerService.HintSize="671,2652" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Used to store the path to the file where the extracted data will be saved." Name="outputPath" />
       <Variable x:TypeArguments="sd:DataSet" sap2010:Annotation.AnnotationText="Used to store the exported data from the ExtractionResults in the Export Extraction Results activity." Name="exportDataSet" />
-      <Variable x:TypeArguments="sd:DataTable" Name="dt_outputfile" />
       <Variable x:TypeArguments="x:String" Name="SheetName" />
       <Variable x:TypeArguments="scg:List(x:String)" Name="arr_sheets" />
-      <Variable x:TypeArguments="x:String" Name="FilePath" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -152,7 +151,7 @@
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
     </Assign>
-    <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="494,149" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
+    <ui:MultipleAssign DisplayName="Assign output file path" sap:VirtualizedContainerService.HintSize="494,149" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
       <ui:MultipleAssign.AssignOperations>
         <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
           <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_1">
@@ -173,7 +172,8 @@
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
     </p1:ExportExtractionResults>
-    <ui:ExcelApplicationScope Password="{x:Null}" SensitivityLabel="{x:Null}" DisplayName="Excel Application Scope" sap:VirtualizedContainerService.HintSize="494,57" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_1" InstanceCachePeriod="3000" SensitivityOperation="None" Visible="False" WorkbookPath="[outputPath]">
+    <ui:KillProcess AppliesTo="{x:Null}" ContinueOnError="{x:Null}" Process="{x:Null}" DisplayName="Kill excel" sap:VirtualizedContainerService.HintSize="494,167" sap2010:WorkflowViewState.IdRef="KillProcess_1" ProcessName="[in_Config(&quot;ProcessName&quot;).ToString]" />
+    <ui:ExcelApplicationScope Password="{x:Null}" SensitivityLabel="{x:Null}" DisplayName="Output file scope" sap:VirtualizedContainerService.HintSize="494,250" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_1" InstanceCachePeriod="3000" SensitivityOperation="None" Visible="False" WorkbookPath="[outputPath]">
       <ui:ExcelApplicationScope.Body>
         <ActivityAction x:TypeArguments="ui:WorkbookApplication">
           <ActivityAction.Argument>
@@ -185,13 +185,13 @@
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <ui:ExcelGetWorkbookSheets DisplayName="Get Workbook Sheets" sap:VirtualizedContainerService.HintSize="416,48" sap2010:WorkflowViewState.IdRef="ExcelGetWorkbookSheets_3" Sheets="[arr_sheets]" />
+            <ui:ExcelGetWorkbookSheets DisplayName="Get output file Sheets" sap:VirtualizedContainerService.HintSize="416,48" sap2010:WorkflowViewState.IdRef="ExcelGetWorkbookSheets_3" Sheets="[arr_sheets]" />
           </Sequence>
         </ActivityAction>
       </ui:ExcelApplicationScope.Body>
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
-          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           <x:Boolean x:Key="IsPinned">False</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
@@ -210,10 +210,10 @@
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
     </Assign>
-    <ui:RetryScope sap2010:Annotation.AnnotationText="Exports could be stored in a shared location. The retry mechanism is used to compensate for minor fluctuatios in network stability and other recoverable issues." DisplayName="Retry Scope - Export Data" sap:VirtualizedContainerService.HintSize="494,827" sap2010:WorkflowViewState.IdRef="RetryScope_1" NumberOfRetries="[in_MaxAttempts]" RetryInterval="[in_RetryInterval]">
+    <ui:RetryScope sap2010:Annotation.AnnotationText="Exports could be stored in a shared location. The retry mechanism is used to compensate for minor fluctuatios in network stability and other recoverable issues." DisplayName="Retry Scope - Export Data" sap:VirtualizedContainerService.HintSize="494,1161" sap2010:WorkflowViewState.IdRef="RetryScope_1" NumberOfRetries="[CInt(in_Config(&quot;MaxRetry&quot;))]" RetryInterval="[in_RetryInterval]">
       <ui:RetryScope.ActivityBody>
         <ActivityAction>
-          <If Condition="[arr_sheets.Contains(SheetName)]" sap:VirtualizedContainerService.HintSize="452,566" sap2010:WorkflowViewState.IdRef="If_1">
+          <If Condition="[arr_sheets.Contains(SheetName)]" DisplayName="If sheetname is present in sheet array?" sap:VirtualizedContainerService.HintSize="452,900" sap2010:WorkflowViewState.IdRef="If_1">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -221,13 +221,14 @@
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
             <If.Then>
-              <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="450,199" sap2010:WorkflowViewState.IdRef="Sequence_6">
+              <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="450,366" sap2010:WorkflowViewState.IdRef="Sequence_6">
                 <sap:WorkflowViewStateService.ViewState>
                   <scg:Dictionary x:TypeArguments="x:String, x:Object">
                     <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                   </scg:Dictionary>
                 </sap:WorkflowViewStateService.ViewState>
-                <ui:AppendRange WorkbookPathResource="{x:Null}" DataTable="[exportDataset.Tables(0)]" DisplayName="Append Range Workbook" sap:VirtualizedContainerService.HintSize="416,139" sap2010:WorkflowViewState.IdRef="AppendRange_3" SheetName="[SheetName]" WorkbookPath="[outputPath]">
+                <ui:KillProcess AppliesTo="{x:Null}" ContinueOnError="{x:Null}" Process="{x:Null}" DisplayName="Kill excel" sap:VirtualizedContainerService.HintSize="416,167" sap2010:WorkflowViewState.IdRef="KillProcess_2" ProcessName="[in_Config(&quot;ProcessName&quot;).ToString]" />
+                <ui:AppendRange WorkbookPathResource="{x:Null}" DataTable="[exportDataset.Tables(0)]" DisplayName="Append output file" sap:VirtualizedContainerService.HintSize="416,139" sap2010:WorkflowViewState.IdRef="AppendRange_3" SheetName="[SheetName]" WorkbookPath="[outputPath]">
                   <sap:WorkflowViewStateService.ViewState>
                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -238,13 +239,14 @@
               </Sequence>
             </If.Then>
             <If.Else>
-              <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="450,260" sap2010:WorkflowViewState.IdRef="Sequence_7">
+              <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="450,427" sap2010:WorkflowViewState.IdRef="Sequence_7">
                 <sap:WorkflowViewStateService.ViewState>
                   <scg:Dictionary x:TypeArguments="x:String, x:Object">
                     <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                   </scg:Dictionary>
                 </sap:WorkflowViewStateService.ViewState>
-                <ui:WriteRange StartingCell="{x:Null}" WorkbookPathResource="{x:Null}" AddHeaders="True" sap2010:Annotation.AnnotationText="Since we are running inside a parallel for each, it is NOT advisable to use Excel Application Scope nor other Excel activities here!" DataTable="[exportDataset.Tables(0)]" DisplayName="Write Range - Write Table to XLSX" sap:VirtualizedContainerService.HintSize="416,200" sap2010:WorkflowViewState.IdRef="WriteRange_7" SheetName="[SheetName]" WorkbookPath="[outputPath]">
+                <ui:KillProcess AppliesTo="{x:Null}" ContinueOnError="{x:Null}" Process="{x:Null}" DisplayName="Kill excel" sap:VirtualizedContainerService.HintSize="416,167" sap2010:WorkflowViewState.IdRef="KillProcess_3" ProcessName="[in_Config(&quot;ProcessName&quot;).ToString]" />
+                <ui:WriteRange StartingCell="{x:Null}" WorkbookPathResource="{x:Null}" AddHeaders="True" sap2010:Annotation.AnnotationText="Since we are running inside a parallel for each, it is NOT advisable to use Excel Application Scope nor other Excel activities here!" DataTable="[exportDataset.Tables(0)]" DisplayName="Write to output file" sap:VirtualizedContainerService.HintSize="416,200" sap2010:WorkflowViewState.IdRef="WriteRange_7" SheetName="[SheetName]" WorkbookPath="[outputPath]">
                   <sap:WorkflowViewStateService.ViewState>
                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                       <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>

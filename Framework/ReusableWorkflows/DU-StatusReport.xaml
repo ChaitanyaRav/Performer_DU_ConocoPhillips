@@ -1,5 +1,6 @@
 <Activity mc:Ignorable="sap sap2010" x:Class="DU_StatusReport" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
+    <x:Property Name="in_RetryInterval" Type="InArgument(x:TimeSpan)" />
     <x:Property Name="in_Report" Type="InArgument(sd:DataTable)" />
     <x:Property Name="in_TransactionItem" Type="InArgument(ui:QueueItem)" />
     <x:Property Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:String))" />
@@ -46,6 +47,7 @@
       <x:String>UiPath.Excel.Activities</x:String>
       <x:String>System.Reflection</x:String>
       <x:String>UiPath.DocumentProcessing.Contracts.Results</x:String>
+      <x:String>System.Numerics</x:String>
     </sco:Collection>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
@@ -103,20 +105,40 @@
       <AssemblyReference>System.IO.FileSystem.DriveInfo</AssemblyReference>
       <AssemblyReference>System.Data.SqlClient</AssemblyReference>
       <AssemblyReference>UiPath.DocumentProcessing.Contracts</AssemblyReference>
+      <AssemblyReference>System.Memory.Data</AssemblyReference>
+      <AssemblyReference>System.Linq.Async</AssemblyReference>
+      <AssemblyReference>System.Runtime.Numerics</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="DU_StatusReport" sap:VirtualizedContainerService.HintSize="787,1196" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="DU_StatusReport" sap:VirtualizedContainerService.HintSize="741,1623" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:LogMessage DisplayName="Log-Report creation" sap:VirtualizedContainerService.HintSize="450,175" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Updating report...&quot;]" />
-    <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{ in_TransactionItem.Reference.ToString, in_TransactionItem.SpecificContent(&quot;Path&quot;).ToString, in_Pageno, in_Status, in_Reason}]" DataTable="[in_Report]" DisplayName="Add Report Data Row" sap:VirtualizedContainerService.HintSize="450,221" sap2010:WorkflowViewState.IdRef="AddDataRow_1" />
-    <ui:LogMessage DisplayName="Log-Add row to report file" sap:VirtualizedContainerService.HintSize="450,175" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[&quot;adding row to report file&quot;]" />
-    <ui:AppendRange WorkbookPathResource="{x:Null}" DataTable="[in_Report]" DisplayName="Append Report File" sap:VirtualizedContainerService.HintSize="450,148" sap2010:WorkflowViewState.IdRef="AppendRange_1" SheetName="[in_Config(&quot;ReportSheet&quot;).ToString]" WorkbookPath="[Path.GetFullPath(in_Config(&quot;ReportPath&quot;).ToString)]" />
-    <ui:ClearDataTable DataTable="[in_Report]" DisplayName="Clear Report DataTable" sap:VirtualizedContainerService.HintSize="450,113" sap2010:WorkflowViewState.IdRef="ClearDataTable_1" />
-    <ui:LogMessage DisplayName="Log-Clear datatable" sap:VirtualizedContainerService.HintSize="450,175" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Info" Message="[&quot;Cleared report datatable&quot;]" />
-    <ui:LogMessage DisplayName="Log-End of report creation" sap:VirtualizedContainerService.HintSize="450,166" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;Report updated...&quot;]" />
+    <ui:LogMessage DisplayName="Log-Report creation" sap:VirtualizedContainerService.HintSize="492,175" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Updating report...&quot;]" />
+    <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{ in_TransactionItem.Reference.ToString, in_TransactionItem.SpecificContent(&quot;Path&quot;).ToString, in_Pageno, in_Status, in_Reason}]" DataTable="[in_Report]" DisplayName="Add Report Data Row" sap:VirtualizedContainerService.HintSize="492,221" sap2010:WorkflowViewState.IdRef="AddDataRow_1" />
+    <ui:LogMessage DisplayName="Log-Add row to report file" sap:VirtualizedContainerService.HintSize="492,175" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[&quot;adding row to report file&quot;]" />
+    <ui:RetryScope DisplayName="Retry Scope for report excel file" sap:VirtualizedContainerService.HintSize="492,575" sap2010:WorkflowViewState.IdRef="RetryScope_1" NumberOfRetries="[CInt(in_Config(&quot;MaxRetry&quot;))]" RetryInterval="[in_RetryInterval]">
+      <ui:RetryScope.ActivityBody>
+        <ActivityAction>
+          <Sequence DisplayName="Action" sap:VirtualizedContainerService.HintSize="450,366" sap2010:WorkflowViewState.IdRef="Sequence_2">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <ui:KillProcess AppliesTo="{x:Null}" ContinueOnError="{x:Null}" Process="{x:Null}" DisplayName="Kill excel" sap:VirtualizedContainerService.HintSize="416,167" sap2010:WorkflowViewState.IdRef="KillProcess_1" ProcessName="[in_Config(&quot;ProcessName&quot;).ToString]" />
+            <ui:AppendRange WorkbookPathResource="{x:Null}" DataTable="[in_Report]" DisplayName="Append Report File" sap:VirtualizedContainerService.HintSize="416,139" sap2010:WorkflowViewState.IdRef="AppendRange_1" SheetName="[in_Config(&quot;ReportSheet&quot;).ToString]" WorkbookPath="[Path.GetFullPath(in_Config(&quot;ReportPath&quot;).ToString)]" />
+          </Sequence>
+        </ActivityAction>
+      </ui:RetryScope.ActivityBody>
+      <ui:RetryScope.Condition>
+        <ActivityFunc x:TypeArguments="x:Boolean" />
+      </ui:RetryScope.Condition>
+    </ui:RetryScope>
+    <ui:ClearDataTable DataTable="[in_Report]" DisplayName="Clear Report DataTable" sap:VirtualizedContainerService.HintSize="492,113" sap2010:WorkflowViewState.IdRef="ClearDataTable_1" />
+    <ui:LogMessage DisplayName="Log-Clear datatable" sap:VirtualizedContainerService.HintSize="492,175" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Info" Message="[&quot;Cleared report datatable&quot;]" />
+    <ui:LogMessage DisplayName="Log-End of report creation" sap:VirtualizedContainerService.HintSize="492,166" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;Report updated...&quot;]" />
   </Sequence>
 </Activity>

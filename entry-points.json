@@ -93,6 +93,11 @@
               "CompletionTime": {
                 "$ref": "#/$defs/nullableOfDateTime"
               },
+              "ProcessingTime": {
+                "type": "integer",
+                "minimum": -2147483648,
+                "maximum": 2147483647
+              },
               "Type": {
                 "enum": [
                   "Validation",
